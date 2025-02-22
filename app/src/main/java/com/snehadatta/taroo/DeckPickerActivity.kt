@@ -13,7 +13,9 @@ import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import com.snehadatta.taroo.ui.presentation.CardPickerScreen
+import com.snehadatta.taroo.ui.presentation.CardResultScreen
 import com.snehadatta.taroo.ui.presentation.ChooseDeckScreen
+import com.snehadatta.taroo.ui.presentation.list
 import com.snehadatta.taroo.ui.theme.TarooTheme
 import com.snehadatta.taroo.ui.theme.orange
 
@@ -37,7 +39,7 @@ class DeckPickerActivity : ComponentActivity() {
                         )
                     }
                 ) { innerPadding ->
-                   ChooseDeckScreen(modifier = Modifier.padding(innerPadding))
+                    CardResultScreen(Modifier.padding(innerPadding), list)
                 }
             }
         }

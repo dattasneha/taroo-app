@@ -32,6 +32,6 @@ fun DeckImage(imageRes: Int, isSelected: Boolean, onClick: () -> Unit) {
                 color = if (isSelected) orange else Color.Transparent,
                 shape = RoundedCornerShape(12.dp)
             ),
-        contentScale = ContentScale.Fit
+        contentScale = ContentScale.Crop
     )
 }

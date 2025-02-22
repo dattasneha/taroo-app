@@ -22,10 +22,13 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.util.fastMaxOf
+import com.snehadatta.taroo.Greeting
 import com.snehadatta.taroo.R
+import com.snehadatta.taroo.ui.theme.TarooTheme
 import java.util.Collections.list
 
 @Composable
@@ -60,3 +63,4 @@ fun CardPickerScreen(
 
 
 }
+
