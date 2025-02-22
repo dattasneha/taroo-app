@@ -46,21 +46,30 @@ fun CardResultScreen(
         )
         Spacer(modifier = Modifier.height(8.dp))
         Row (
-            modifier = Modifier,
+            modifier = Modifier
+                .height(200.dp),
             horizontalArrangement = Arrangement.SpaceEvenly
         ){
-            Box(modifier = Modifier.aspectRatio(1f)) {
-                DeckImage(imageRes[0],false) {}
-            }
+            DeckImage(imageRes[0],false) {}
+            DeckImage(imageRes[1],false) {}
+            DeckImage(imageRes[2],false) {}
 
-            Box(modifier = Modifier.aspectRatio(1f)) {
-                DeckImage(imageRes[1],false) {}
-            }
-            Box(modifier = Modifier.size(40.dp)) {
-                DeckImage(imageRes[2],false) {}
-            }
 
         }
+        Spacer(modifier = Modifier.height(8.dp))
+        Text(
+            text = "Meaning of cards",
+            fontWeight = FontWeight.Bold,
+            modifier = Modifier
+                .align(Alignment.Start)
+        )
+
+        Text(
+            text = "Meanings",
+            fontWeight = FontWeight.Medium,
+            modifier = Modifier
+                .align(Alignment.Start)
+        )
     }
 }
 
