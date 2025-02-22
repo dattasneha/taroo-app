@@ -12,12 +12,13 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
+import com.snehadatta.taroo.ui.presentation.CardPickerScreen
 import com.snehadatta.taroo.ui.presentation.ChooseDeckScreen
 import com.snehadatta.taroo.ui.theme.TarooTheme
 import com.snehadatta.taroo.ui.theme.orange
 
 @OptIn(ExperimentalMaterial3Api::class)
-class MainActivity : ComponentActivity() {
+class DeckPickerActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -36,7 +37,7 @@ class MainActivity : ComponentActivity() {
                         )
                     }
                 ) { innerPadding ->
-                    ChooseDeckScreen(modifier = Modifier.padding(innerPadding))
+                   ChooseDeckScreen(modifier = Modifier.padding(innerPadding))
                 }
             }
         }
