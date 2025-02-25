@@ -34,9 +34,9 @@ fun CardResultScreen(
             modifier = modifier
                 .align(Alignment.CenterHorizontally)
         )
-        Spacer(modifier = modifier.height(8.dp))
+        Spacer(modifier = Modifier.height(8.dp))
         Row (
-            modifier = modifier
+            modifier = Modifier
                 .height(200.dp),
             horizontalArrangement = Arrangement.SpaceEvenly
         ){
@@ -46,18 +46,18 @@ fun CardResultScreen(
 
 
         }
-        Spacer(modifier = modifier.height(8.dp))
+        Spacer(modifier = Modifier.height(8.dp))
         Text(
             text = "Meaning of cards",
             fontWeight = FontWeight.Bold,
-            modifier = modifier
+            modifier = Modifier
                 .align(Alignment.Start)
         )
 
         Text(
             text = "Meanings",
             fontWeight = FontWeight.Medium,
-            modifier = modifier
+            modifier = Modifier
                 .align(Alignment.Start)
         )
     }
