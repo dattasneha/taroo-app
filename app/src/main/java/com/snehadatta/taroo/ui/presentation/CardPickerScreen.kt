@@ -10,6 +10,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.snehadatta.taroo.data.model.Card
@@ -20,36 +21,36 @@ import kotlin.random.Random
 fun CardPickerScreen(
     modifier: Modifier,
     deckImageRes: Int,
-    tarotCardList: List<Card>
+    tarotCardList: List<Card>,
+    resources: Resources
 ) {
-
     val images = mutableListOf<Int>().apply {
         repeat(78) { add(deckImageRes) }
     }
     val mutableCardList = tarotCardList.toMutableList()
 
-    val selectedIndex by remember { mutableStateOf(-1) }
+    var selectedIndex by remember { mutableStateOf(-1) }
 
             LazyVerticalGrid(
-                columns = GridCells.Fixed(6),
+                columns = GridCells.Fixed(5),
                 modifier = modifier
                     .padding(16.dp)
                     .padding(top = 32.dp),
 
-                verticalArrangement = Arrangement.spacedBy(2.dp),
-                horizontalArrangement = Arrangement.spacedBy(2.dp)
+                verticalArrangement = Arrangement.spacedBy(0.dp),
+                horizontalArrangement = Arrangement.spacedBy(0.dp)
             ) {
                 itemsIndexed(images) { index, imageRes ->
                     DeckImage(
                         imageRes = imageRes,
                         isSelected = selectedIndex == index,
-                        onClick = {}
+                        onClick = {selectedIndex = index}
                     )
 
                     if(selectedIndex == index) {
                         val randomIndex = Random.nextInt(mutableCardList.size)
                         val image = mutableCardList.removeAt(randomIndex)
-                        val selectedImage = TarotImageMapper.getTarotImage(Resources.getSystem(),image.nameShort)
+                        val selectedImage = TarotImageMapper.getTarotImage(resources,image.nameShort)
                         DeckImage(
                             imageRes = selectedImage,
                             isSelected = false,

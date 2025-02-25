@@ -1,5 +1,6 @@
 package com.snehadatta.taroo.ui.presentation
 
+import android.content.res.Resources
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -17,13 +18,15 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.snehadatta.taroo.R
+import com.snehadatta.taroo.data.model.Card
 import com.snehadatta.taroo.ui.theme.TarooTheme
+import com.snehadatta.taroo.util.TarotImageMapper
 
 val list = listOf(R.drawable.cover3,R.drawable.cover2,R.drawable.cover4)
 @Composable
 fun CardResultScreen(
     modifier:Modifier,
-    images: List<Int>) {
+    images: List<Card>) {
     val imageRes by  remember { mutableStateOf(images) }
     val selectedIndex by remember { mutableStateOf(-1) }
 
@@ -40,10 +43,9 @@ fun CardResultScreen(
                 .height(200.dp),
             horizontalArrangement = Arrangement.SpaceEvenly
         ){
-            DeckImage(imageRes[0],false) {}
-            DeckImage(imageRes[1],false) {}
-            DeckImage(imageRes[2],false) {}
-
+            DeckImage(TarotImageMapper.getTarotImage(Resources.getSystem(),imageRes[0].nameShort),false) {}
+            DeckImage(TarotImageMapper.getTarotImage(Resources.getSystem(),imageRes[1].nameShort),false) {}
+            DeckImage(TarotImageMapper.getTarotImage(Resources.getSystem(),imageRes[2].nameShort),false) {}
 
         }
         Spacer(modifier = Modifier.height(8.dp))
@@ -55,18 +57,11 @@ fun CardResultScreen(
         )
 
         Text(
-            text = "Meanings",
+            text = "your personalised reading",
             fontWeight = FontWeight.Medium,
             modifier = Modifier
                 .align(Alignment.Start)
         )
-    }
-}
 
-@Preview(showBackground = true)
-@Composable
-fun CardResultPreview() {
-    TarooTheme {
-        CardResultScreen(Modifier, list)
     }
 }

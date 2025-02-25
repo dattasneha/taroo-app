@@ -6,7 +6,7 @@ import retrofit2.http.GET
 
 interface TarotApi {
     @GET("cards")
-    fun getAllCards():Response<GetAllCardsResponse>
+    suspend fun getAllCards():Response<GetAllCardsResponse>
 
     companion object {
         const val BASE_URL = "https://tarotapi.dev/api/v1/"

@@ -23,9 +23,9 @@ fun DeckImage(imageRes: Int, isSelected: Boolean, onClick: () -> Unit) {
         contentDescription = "Deck Cover",
         modifier = Modifier
             .aspectRatio(0.6f)
-            .padding(8.dp)
-            .shadow(elevation = 8.dp, shape = RoundedCornerShape(12.dp)) // Adds shadow
-            .clip(RoundedCornerShape(12.dp))
+            .padding(12.dp)
+            .shadow(elevation = 8.dp, shape = RoundedCornerShape(8.dp)) // Adds shadow
+            .clip(RoundedCornerShape(8.dp))
             .clickable { onClick() }
             .border(
                 width = if (isSelected) 6.dp else 0.dp, // Adds a red border if selected

@@ -1,6 +1,7 @@
 package com.snehadatta.taroo
 
 import android.os.Bundle
+import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
@@ -11,6 +12,7 @@ import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -41,14 +43,16 @@ class CardPickerActivity : ComponentActivity() {
                         }
                         is Resource.Success -> {
                             cardState.data?.let {
-                                CardPickerScreen(Modifier.padding(innerPadding),R.drawable.ar03,
-                                    it.cards)
+                                CardPickerScreen(Modifier.padding(innerPadding),R.drawable.cover3,
+                                    it.cards, resources)
                             }
                         }
                         is Resource.Error -> {
                             val errorMessage = cardState.message ?: "An unknown error occurred"
                             Text(text = "Error: $errorMessage", color = Color.Red)
                         }
+
+                        else -> {}
                     }
 
                 }
