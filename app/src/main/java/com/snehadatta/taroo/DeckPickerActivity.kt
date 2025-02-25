@@ -16,7 +16,9 @@ import com.snehadatta.taroo.ui.presentation.CardResultScreen
 import com.snehadatta.taroo.ui.presentation.list
 import com.snehadatta.taroo.ui.theme.TarooTheme
 import com.snehadatta.taroo.ui.theme.orange
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 @OptIn(ExperimentalMaterial3Api::class)
 class DeckPickerActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
