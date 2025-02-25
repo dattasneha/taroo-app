@@ -1,5 +1,6 @@
 package com.snehadatta.taroo.ui.presentation
 
+import android.widget.Toast
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -20,7 +21,6 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.OutlinedTextField
-import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -29,17 +29,19 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import com.snehadatta.taroo.R
-import com.snehadatta.taroo.ui.theme.TarooTheme
 import com.snehadatta.taroo.ui.theme.orange
 
 @Composable
 fun ChooseDeckScreen(
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    selectedIndex: Int,
+    navController: NavController
 ) {
     val images = listOf(
         R.drawable.cover1,
@@ -47,8 +49,9 @@ fun ChooseDeckScreen(
         R.drawable.cover3,
         R.drawable.cover4
     )
-    var selectedIndex by remember { mutableStateOf(-1) }
+    var selectedIndex by remember { mutableStateOf(selectedIndex) }
     var question by remember { mutableStateOf("") }
+    val context = LocalContext.current
     Column(
         modifier = modifier
             .padding(horizontal = 32.dp)
@@ -100,7 +103,17 @@ fun ChooseDeckScreen(
                 .height(64.dp)
                 .padding(top = 16.dp)
                 .align(Alignment.CenterHorizontally),
-            onClick = {},
+            onClick = {
+                if (selectedIndex != -1 && question.isNotEmpty()) {
+                    navController.navigate(Routes.ScreenCardPicker)
+                }
+                else if(selectedIndex == -1) {
+                    Toast.makeText(context, "Please choose a deck.", Toast.LENGTH_SHORT ).show()
+                }
+                else if(question.isEmpty()) {
+                    Toast.makeText(context, "Please write a message.", Toast.LENGTH_SHORT ).show()
+                }
+            },
             colors = ButtonDefaults.buttonColors(orange)
         ) {
             Text(
@@ -117,13 +130,13 @@ fun ChooseDeckScreen(
 
 
 
-@PreviewLightDark()
-@Composable
-fun DeckPickerPreview() {
-    TarooTheme {
-        Scaffold { innerPadding ->
-            ChooseDeckScreen(modifier = Modifier.padding(innerPadding))
-        }
-    }
-}
+//@PreviewLightDark()
+//@Composable
+//fun DeckPickerPreview() {
+//    TarooTheme {
+//        Scaffold { innerPadding ->
+//            ChooseDeckScreen(modifier = Modifier.padding(innerPadding))
+//        }
+//    }
+//}
 

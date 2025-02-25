@@ -13,6 +13,8 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
+import com.snehadatta.taroo.R
 import com.snehadatta.taroo.data.model.Card
 import com.snehadatta.taroo.util.TarotImageMapper
 import kotlin.random.Random
@@ -24,6 +26,7 @@ fun CardPickerScreen(
     tarotCardList: List<Card>,
     resources: Resources
 ) {
+
     val images = mutableListOf<Int>().apply {
         repeat(78) { add(deckImageRes) }
     }
