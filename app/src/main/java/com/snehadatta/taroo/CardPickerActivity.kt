@@ -19,9 +19,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
 import com.snehadatta.taroo.ui.presentation.CardPickerScreen
 import com.snehadatta.taroo.ui.presentation.ChooseDeckScreen
 import com.snehadatta.taroo.ui.presentation.TarotViewModel
@@ -34,13 +36,6 @@ import dagger.hilt.android.AndroidEntryPoint
 class CardPickerActivity : ComponentActivity() {
     private val tarotViewModel: TarotViewModel by viewModels()
 
-    val images = listOf(
-        R.drawable.cover1,
-        R.drawable.cover2,
-        R.drawable.cover3,
-        R.drawable.cover4
-    )
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         tarotViewModel.getAllCards()
@@ -51,24 +46,28 @@ class CardPickerActivity : ComponentActivity() {
                 val navController = rememberNavController()
 
                 val cardState by tarotViewModel.cardState.collectAsStateWithLifecycle()
-                var selectedIndex by remember { mutableStateOf(-1) }
 
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
 
                     NavHost(navController = navController, startDestination = Routes.ScreenDeckPicker, builder = {
                         composable(Routes.ScreenDeckPicker) {
-                            ChooseDeckScreen(Modifier.padding(innerPadding), selectedIndex, navController)
+                            ChooseDeckScreen(Modifier.padding(innerPadding), navController)
                         }
-                        composable(Routes.ScreenCardPicker) {
+                        composable(
+                            Routes.ScreenCardPicker+"/{deckImageRes}",
+                            arguments = listOf(navArgument("deckImageRes"){ type = NavType.IntType})
+                        ) { backStackEntry ->
+                            val deckImageRes = backStackEntry.arguments?.getInt("deckImageRes")
                             when(cardState) {
                                 is Resource.Loading -> {
                                     CircularProgressIndicator()
                                 }
                                 is Resource.Success -> {
                                     cardState.data?.let {
-
-                                            CardPickerScreen(Modifier.padding(innerPadding), images[selectedIndex],
+                                        if (deckImageRes != null) {
+                                            CardPickerScreen(Modifier.padding(innerPadding), deckImageRes,
                                                 it.cards, resources)
+                                        }
                                     }
                                 }
                                 is Resource.Error -> {

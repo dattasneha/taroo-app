@@ -40,7 +40,6 @@ import com.snehadatta.taroo.ui.theme.orange
 @Composable
 fun ChooseDeckScreen(
     modifier: Modifier = Modifier,
-    selectedIndex: Int,
     navController: NavController
 ) {
     val images = listOf(
@@ -49,7 +48,7 @@ fun ChooseDeckScreen(
         R.drawable.cover3,
         R.drawable.cover4
     )
-    var selectedIndex by remember { mutableStateOf(selectedIndex) }
+    var selectedIndex by remember { mutableStateOf(-1) }
     var question by remember { mutableStateOf("") }
     val context = LocalContext.current
     Column(
@@ -105,7 +104,7 @@ fun ChooseDeckScreen(
                 .align(Alignment.CenterHorizontally),
             onClick = {
                 if (selectedIndex != -1 && question.isNotEmpty()) {
-                    navController.navigate(Routes.ScreenCardPicker)
+                    navController.navigate(Routes.ScreenCardPicker+"/${images[selectedIndex]}")
                 }
                 else if(selectedIndex == -1) {
                     Toast.makeText(context, "Please choose a deck.", Toast.LENGTH_SHORT ).show()
