@@ -35,18 +35,19 @@ val list = listOf(R.drawable.cover3,R.drawable.cover2,R.drawable.cover4)
 fun CardResultScreen(
     modifier:Modifier,
     images: List<Int>) {
-    var imageRes by  remember { mutableStateOf(images) }
-    var selectedIndex by remember { mutableStateOf(-1) }
-    Column (modifier = Modifier.padding(16.dp)){
+    val imageRes by  remember { mutableStateOf(images) }
+    val selectedIndex by remember { mutableStateOf(-1) }
+
+    Column (modifier = modifier.padding(16.dp)){
         Text(
             text = "Your reading",
             fontWeight = FontWeight.SemiBold,
-            modifier = Modifier
+            modifier = modifier
                 .align(Alignment.CenterHorizontally)
         )
-        Spacer(modifier = Modifier.height(8.dp))
+        Spacer(modifier = modifier.height(8.dp))
         Row (
-            modifier = Modifier
+            modifier = modifier
                 .height(200.dp),
             horizontalArrangement = Arrangement.SpaceEvenly
         ){
@@ -56,18 +57,18 @@ fun CardResultScreen(
 
 
         }
-        Spacer(modifier = Modifier.height(8.dp))
+        Spacer(modifier = modifier.height(8.dp))
         Text(
             text = "Meaning of cards",
             fontWeight = FontWeight.Bold,
-            modifier = Modifier
+            modifier = modifier
                 .align(Alignment.Start)
         )
 
         Text(
             text = "Meanings",
             fontWeight = FontWeight.Medium,
-            modifier = Modifier
+            modifier = modifier
                 .align(Alignment.Start)
         )
     }

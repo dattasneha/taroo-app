@@ -45,10 +45,10 @@ object ApiModule {
 
     @Provides
     @Singleton
-    fun providesAuthApi(retrofit: Retrofit): TarotApi {
+    fun providesTarotApi(retrofit: Retrofit): TarotApi {
         return retrofit.create(TarotApi::class.java)
     }
 
     @Provides
-    fun providesHomeRepository(impl: TarotRepositoryImpl): TarotRepository = impl
+    fun providesTarotRepository(impl: TarotRepositoryImpl): TarotRepository = impl
 }
