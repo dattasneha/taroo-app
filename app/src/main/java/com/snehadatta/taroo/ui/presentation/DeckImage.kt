@@ -17,19 +17,23 @@ import androidx.compose.ui.unit.dp
 import com.snehadatta.taroo.ui.theme.orange
 
 @Composable
-fun DeckImage(imageRes: Int, isSelected: Boolean, onClick: () -> Unit) {
+fun DeckImage(
+    imageRes: Int,
+    isSelected: Boolean,
+    showBorder:Boolean,
+    onClick: () -> Unit ) {
     Image(
         painter = painterResource(id = imageRes),
         contentDescription = "Deck Cover",
         modifier = Modifier
             .aspectRatio(0.6f)
             .padding(12.dp)
-            .shadow(elevation = 8.dp, shape = RoundedCornerShape(8.dp)) // Adds shadow
+            .shadow(elevation = 8.dp, shape = RoundedCornerShape(8.dp))
             .clip(RoundedCornerShape(8.dp))
             .clickable { onClick() }
             .border(
-                width = if (isSelected) 6.dp else 0.dp, // Adds a red border if selected
-                color = if (isSelected) orange else Color.Transparent,
+                width = if (isSelected && showBorder) 6.dp else 0.dp,
+                color = if (isSelected && showBorder) orange else Color.Transparent,
                 shape = RoundedCornerShape(12.dp)
             ),
         contentScale = ContentScale.Crop

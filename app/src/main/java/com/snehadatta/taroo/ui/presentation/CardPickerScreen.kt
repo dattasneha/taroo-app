@@ -33,6 +33,7 @@ fun CardPickerScreen(
     val mutableCardList = tarotCardList.toMutableList()
 
     var selectedIndex by remember { mutableStateOf(-1) }
+    var maxCard = 0
 
             LazyVerticalGrid(
                 columns = GridCells.Fixed(5),
@@ -44,22 +45,28 @@ fun CardPickerScreen(
                 horizontalArrangement = Arrangement.spacedBy(0.dp)
             ) {
                 itemsIndexed(images) { index, imageRes ->
+
                     DeckImage(
                         imageRes = imageRes,
                         isSelected = selectedIndex == index,
+                        showBorder = false,
                         onClick = {selectedIndex = index}
                     )
 
-                    if(selectedIndex == index) {
+                    if(selectedIndex == index && maxCard < 3) {
                         val randomIndex = Random.nextInt(mutableCardList.size)
                         val image = mutableCardList.removeAt(randomIndex)
                         val selectedImage = TarotImageMapper.getTarotImage(resources,image.nameShort)
                         DeckImage(
                             imageRes = selectedImage,
                             isSelected = false,
+                            showBorder = false,
                             onClick = {}
                         )
+                        maxCard += 1
                     }
+
+
 
                 }
 

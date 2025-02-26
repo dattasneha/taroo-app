@@ -43,9 +43,9 @@ fun CardResultScreen(
                 .height(200.dp),
             horizontalArrangement = Arrangement.SpaceEvenly
         ){
-            DeckImage(TarotImageMapper.getTarotImage(Resources.getSystem(),imageRes[0].nameShort),false) {}
-            DeckImage(TarotImageMapper.getTarotImage(Resources.getSystem(),imageRes[1].nameShort),false) {}
-            DeckImage(TarotImageMapper.getTarotImage(Resources.getSystem(),imageRes[2].nameShort),false) {}
+            DeckImage(TarotImageMapper.getTarotImage(Resources.getSystem(),imageRes[0].nameShort),false,false) {}
+            DeckImage(TarotImageMapper.getTarotImage(Resources.getSystem(),imageRes[1].nameShort),false,false) {}
+            DeckImage(TarotImageMapper.getTarotImage(Resources.getSystem(),imageRes[2].nameShort),false,false) {}
 
         }
         Spacer(modifier = Modifier.height(8.dp))
