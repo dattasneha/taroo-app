@@ -27,10 +27,10 @@ fun CardPickerScreen(
     deckImageRes: Int,
     tarotCardList: List<Card>,
     resources: Resources,
-    navController: NavController
+    navController: NavController,
+    viewModel: TarotViewModel
 ) {
     var maxCard = 0
-    val chosenCardList: MutableList<String> = MutableList(3) {""}
     val images = mutableListOf<Int>().apply {
         repeat(78) { add(deckImageRes) }
     }
@@ -58,7 +58,7 @@ fun CardPickerScreen(
 
                     if(selectedIndex == index && maxCard < 3) {
                         val randomIndex = Random.nextInt(mutableCardList.size)
-                        chosenCardList.add(mutableCardList.get(randomIndex).name)
+                        viewModel.updateCardList(mutableCardList[randomIndex].name)
                         val image = mutableCardList.removeAt(randomIndex)
                         val selectedImage = TarotImageMapper.getTarotImage(resources,image.nameShort)
                         DeckImage(
@@ -71,8 +71,7 @@ fun CardPickerScreen(
                     }
                     //temporary
                     if(maxCard == 3) {
-                        val jsonList = Uri.encode(Gson().toJson(chosenCardList))
-                        navController.navigate(Routes.ScreenChat+"/${jsonList}")
+                        navController.navigate(Routes.ScreenChat)
                     }
 
 

@@ -1,6 +1,7 @@
 package com.snehadatta.taroo.ui.presentation
 
 import androidx.compose.runtime.mutableStateListOf
+import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.google.ai.client.generativeai.BuildConfig
@@ -25,6 +26,20 @@ class TarotViewModel @Inject constructor(
     private val _cardState = MutableStateFlow<Resource<GetAllCardsResponse>>(Resource.Loading())
     val  cardState:StateFlow<Resource<GetAllCardsResponse>> = _cardState.asStateFlow()
 
+    private var _initialQuestion = mutableStateOf("")
+    val initialQuestion: String = _initialQuestion.value
+
+    fun updateInitialQuestion(newData: String) {
+        _initialQuestion.value = newData
+    }
+
+    private var _cardList = mutableListOf<String>()
+    val cardList: List<String> = _cardList
+
+    fun updateCardList(data: String) {
+        _cardList.add(data)
+    }
+
     val messageList by lazy {
         mutableStateListOf<Message>()
     }
@@ -42,8 +57,7 @@ class TarotViewModel @Inject constructor(
         modelName = "gemini-2.0-pro-exp-02-05",
         apiKey = com.snehadatta.taroo.BuildConfig.API_KEY
     )
-    fun getAiResponse(message: String, cardName : List<String>) {
-        val question = message+"The tarot cars that I received are"+ cardName
+    fun getAiResponse(message: String) {
         viewModelScope.launch {
             try {
                 val chat = generativeModel.startChat(
@@ -51,10 +65,10 @@ class TarotViewModel @Inject constructor(
                         content(it.role) { text(it.message) }
                     }.toList()
                 )
-                messageList.add(Message(question, "user"))
+                messageList.add(Message(message, "user"))
                 messageList.add(Message("Typing...", "model"))
+                val response = chat.sendMessage(message)
                 messageList.removeLast()
-                val response = chat.sendMessage(question)
                 messageList.add(Message(response.text.toString(), "model"))
             } catch (e: Exception) {
                 messageList.removeLast()

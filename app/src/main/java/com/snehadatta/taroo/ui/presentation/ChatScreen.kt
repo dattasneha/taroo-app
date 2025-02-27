@@ -32,15 +32,14 @@ import com.snehadatta.taroo.ui.theme.orange
 @Composable
 fun ChatScreen(
     modifier: Modifier,
-    viewModel: TarotViewModel,
-    cards: List<String>) {
+    viewModel: TarotViewModel) {
     Column(
         modifier = modifier
     ) {
         MessageList(modifier = Modifier.weight(1f),viewModel.messageList)
         MessageInput(
             onMessageSend = {
-                viewModel.getAiResponse(it,cards)
+                viewModel.getAiResponse(it)
             }
         )
     }

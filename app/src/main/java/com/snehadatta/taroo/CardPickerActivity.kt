@@ -56,7 +56,7 @@ class CardPickerActivity : ComponentActivity() {
 
                     NavHost(navController = navController, startDestination = Routes.ScreenDeckPicker, builder = {
                         composable(Routes.ScreenDeckPicker) {
-                            ChooseDeckScreen(Modifier.padding(innerPadding), navController)
+                            ChooseDeckScreen(Modifier.padding(innerPadding), navController,tarotViewModel)
                         }
                         composable(
                             Routes.ScreenCardPicker+"/{deckImageRes}",
@@ -71,7 +71,7 @@ class CardPickerActivity : ComponentActivity() {
                                     cardState.data?.let {
                                         if (deckImageRes != null) {
                                             CardPickerScreen(Modifier.padding(innerPadding), deckImageRes,
-                                                it.cards, resources, navController)
+                                                it.cards, resources, navController,tarotViewModel)
                                         }
                                     }
                                 }
@@ -83,15 +83,8 @@ class CardPickerActivity : ComponentActivity() {
                                 else -> {}
                             }
                         }
-                        composable(
-                            Routes.ScreenChat+"/{chosenCards}",
-                            arguments = listOf(navArgument("chosenCards") {type = NavType.StringType})
-                            ) { backStackStory ->
-                            val jsonList = backStackStory.arguments?.getString("chosenCards") ?: "[]"
-                            val list = object : TypeToken<List<String>>() {}.type
-                            val chosenCards: List<String> = Gson().fromJson(jsonList,list) ?: emptyList()
-
-                            ChatScreen(Modifier.padding(innerPadding),tarotViewModel, chosenCards)
+                        composable(Routes.ScreenChat) {
+                            ChatScreen(Modifier.padding(innerPadding),tarotViewModel)
                         }
                     })
 

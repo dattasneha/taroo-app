@@ -40,7 +40,8 @@ import com.snehadatta.taroo.ui.theme.orange
 @Composable
 fun ChooseDeckScreen(
     modifier: Modifier = Modifier,
-    navController: NavController
+    navController: NavController,
+    viewModel: TarotViewModel
 ) {
     val images = listOf(
         R.drawable.cover1,
@@ -105,6 +106,7 @@ fun ChooseDeckScreen(
                 .align(Alignment.CenterHorizontally),
             onClick = {
                 if (selectedIndex != -1 && question.isNotEmpty()) {
+                    viewModel.updateInitialQuestion(question)
                     navController.navigate(Routes.ScreenCardPicker+"/${images[selectedIndex]}")
                 }
                 else if(selectedIndex == -1) {
