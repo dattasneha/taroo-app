@@ -1,3 +1,6 @@
+import java.io.FileInputStream
+import java.util.Properties
+
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.jetbrains.kotlin.android)
@@ -20,6 +23,10 @@ android {
         vectorDrawables {
             useSupportLibrary = true
         }
+       val properties = Properties().apply {
+           load(project.rootProject.file("local.properties").inputStream())
+       }
+       buildConfigField("String", "API_KEY", "\"${properties.getProperty("API_KEY")}\"")
     }
 
     buildTypes {
@@ -40,6 +47,7 @@ android {
     }
     buildFeatures {
         compose = true
+        buildConfig = true
     }
     composeOptions {
         kotlinCompilerExtensionVersion = "1.5.1"
@@ -90,5 +98,5 @@ dependencies {
     implementation(libs.room.ktx)
     implementation(libs.androidx.ui.text.google.fonts)
     implementation(libs.androidx.navigation.compose)
-
+    implementation(libs.generativeai)
 }

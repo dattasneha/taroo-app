@@ -25,7 +25,7 @@ composeBom = "2024.04.01"
 activity = "1.9.3"
 uiTextGoogleFonts = "1.7.8"
 nav_version = "2.5.3"
-
+generativeai_version = "0.9.0"
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
 androidx-ui-text-google-fonts = { module = "androidx.compose.ui:ui-text-google-fonts", version.ref = "uiTextGoogleFonts" }
@@ -63,6 +63,7 @@ androidx-ui-test-manifest = { group = "androidx.compose.ui", name = "ui-test-man
 androidx-material3 = { group = "androidx.compose.material3", name = "material3" }
 androidx-activity = { group = "androidx.activity", name = "activity", version.ref = "activity" }
 androidx-navigation-compose = { module = "androidx.navigation:navigation-compose", version.ref = "nav_version" }
+generativeai = { module = "com.google.ai.client.generativeai:generativeai", version.ref = "generativeai_version"}
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

@@ -1,5 +1,6 @@
 package com.snehadatta.taroo
 
+import android.os.Build
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -24,18 +25,23 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 import com.snehadatta.taroo.ui.presentation.CardPickerScreen
+import com.snehadatta.taroo.ui.presentation.ChatScreen
 import com.snehadatta.taroo.ui.presentation.ChooseDeckScreen
 import com.snehadatta.taroo.ui.presentation.TarotViewModel
 import com.snehadatta.taroo.ui.theme.TarooTheme
 import com.snehadatta.taroo.util.Resource
 import com.snehadatta.taroo.ui.presentation.Routes
+import com.snehadatta.taroo.util.TarotImageMapper
 import dagger.hilt.android.AndroidEntryPoint
+
+
 
 @AndroidEntryPoint
 class CardPickerActivity : ComponentActivity() {
     private val tarotViewModel: TarotViewModel by viewModels()
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         tarotViewModel.getAllCards()
@@ -44,7 +50,6 @@ class CardPickerActivity : ComponentActivity() {
         setContent {
             TarooTheme {
                 val navController = rememberNavController()
-
                 val cardState by tarotViewModel.cardState.collectAsStateWithLifecycle()
 
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
@@ -66,7 +71,7 @@ class CardPickerActivity : ComponentActivity() {
                                     cardState.data?.let {
                                         if (deckImageRes != null) {
                                             CardPickerScreen(Modifier.padding(innerPadding), deckImageRes,
-                                                it.cards, resources)
+                                                it.cards, resources, navController)
                                         }
                                     }
                                 }
@@ -78,8 +83,17 @@ class CardPickerActivity : ComponentActivity() {
                                 else -> {}
                             }
                         }
-                    })
+                        composable(
+                            Routes.ScreenChat+"/{chosenCards}",
+                            arguments = listOf(navArgument("chosenCards") {type = NavType.StringType})
+                            ) { backStackStory ->
+                            val jsonList = backStackStory.arguments?.getString("chosenCards") ?: "[]"
+                            val list = object : TypeToken<List<String>>() {}.type
+                            val chosenCards: List<String> = Gson().fromJson(jsonList,list) ?: emptyList()
 
+                            ChatScreen(Modifier.padding(innerPadding),tarotViewModel, chosenCards)
+                        }
+                    })
 
                 }
             }

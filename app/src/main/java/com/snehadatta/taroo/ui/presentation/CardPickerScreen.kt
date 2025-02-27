@@ -1,6 +1,7 @@
 package com.snehadatta.taroo.ui.presentation
 
 import android.content.res.Resources
+import android.net.Uri
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.grid.GridCells
@@ -14,6 +15,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import com.google.gson.Gson
 import com.snehadatta.taroo.R
 import com.snehadatta.taroo.data.model.Card
 import com.snehadatta.taroo.util.TarotImageMapper
@@ -24,16 +26,17 @@ fun CardPickerScreen(
     modifier: Modifier,
     deckImageRes: Int,
     tarotCardList: List<Card>,
-    resources: Resources
+    resources: Resources,
+    navController: NavController
 ) {
-
+    var maxCard = 0
+    val chosenCardList: MutableList<String> = MutableList(3) {""}
     val images = mutableListOf<Int>().apply {
         repeat(78) { add(deckImageRes) }
     }
     val mutableCardList = tarotCardList.toMutableList()
 
     var selectedIndex by remember { mutableStateOf(-1) }
-    var maxCard = 0
 
             LazyVerticalGrid(
                 columns = GridCells.Fixed(5),
@@ -55,6 +58,7 @@ fun CardPickerScreen(
 
                     if(selectedIndex == index && maxCard < 3) {
                         val randomIndex = Random.nextInt(mutableCardList.size)
+                        chosenCardList.add(mutableCardList.get(randomIndex).name)
                         val image = mutableCardList.removeAt(randomIndex)
                         val selectedImage = TarotImageMapper.getTarotImage(resources,image.nameShort)
                         DeckImage(
@@ -65,7 +69,11 @@ fun CardPickerScreen(
                         )
                         maxCard += 1
                     }
-
+                    //temporary
+                    if(maxCard == 3) {
+                        val jsonList = Uri.encode(Gson().toJson(chosenCardList))
+                        navController.navigate(Routes.ScreenChat+"/${jsonList}")
+                    }
 
 
                 }
