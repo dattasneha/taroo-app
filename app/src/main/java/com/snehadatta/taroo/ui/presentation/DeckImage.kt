@@ -11,6 +11,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 
@@ -23,6 +24,7 @@ fun DeckImage(
     Image(
         painter = painterResource(id = imageRes),
         contentDescription = "Deck Cover",
+        contentScale = ContentScale.FillBounds,
         modifier = Modifier
             .aspectRatio(0.6f)
             .padding(12.dp)
