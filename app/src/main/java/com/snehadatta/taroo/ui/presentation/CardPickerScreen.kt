@@ -43,7 +43,9 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.snehadatta.taroo.R
+import com.snehadatta.taroo.data.local.entity.History
 import com.snehadatta.taroo.data.model.Card
+import com.snehadatta.taroo.data.model.Message
 import com.snehadatta.taroo.ui.theme.TarooTheme
 import com.snehadatta.taroo.util.TarotImageMapper
 import kotlin.random.Random

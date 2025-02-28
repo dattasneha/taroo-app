@@ -2,14 +2,12 @@ package com.snehadatta.taroo.ui.presentation
 
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.google.ai.client.generativeai.BuildConfig
 import com.google.ai.client.generativeai.GenerativeModel
 import com.google.ai.client.generativeai.type.content
-import com.google.ai.client.generativeai.type.generationConfig
 import com.snehadatta.taroo.data.TarotRepositoryImpl
+import com.snehadatta.taroo.data.local.entity.History
 import com.snehadatta.taroo.data.model.Card
 import com.snehadatta.taroo.data.model.GetAllCardsResponse
 import com.snehadatta.taroo.data.model.Message
@@ -31,23 +29,24 @@ class TarotViewModel @Inject constructor(
     private var _initialQuestion = mutableStateOf("")
     val initialQuestion = _initialQuestion
 
+    private var _cardNameList = mutableListOf<String>()
+    val cardNameList: List<String> = _cardNameList
+
+
+    private var _selectedCards = mutableListOf<Card>()
+    val selectedCards: List<Card> = _selectedCards
+
     fun updateInitialQuestion(newData: String) {
         _initialQuestion.value = newData
     }
 
-    private var _cardList = mutableListOf<String>()
-    val cardList: List<String> = _cardList
-
     fun updateCardList(data: String) {
-        _cardList.add(data)
+        _cardNameList.add(data)
     }
 
     val messageList by lazy {
         mutableStateListOf<Message>()
     }
-
-    private var _selectedCards = mutableListOf<Card>()
-    val selectedCards: List<Card> = _selectedCards
 
     fun updateSelectedCardList(data: Card) {
         _selectedCards.add(data)
@@ -66,14 +65,18 @@ class TarotViewModel @Inject constructor(
         modelName = "gemini-2.0-pro-exp-02-05",
         apiKey = com.snehadatta.taroo.BuildConfig.API_KEY
     )
+
     fun getAiResponse(message: String) {
         viewModelScope.launch {
+            val historyMessages = tarotRepositoryImpl.getHistory()
             try {
                 val chat = generativeModel.startChat(
                     history = messageList.map {
                         content(it.role) { text(it.message) }
                     }.toList()
                 )
+                messageList.addAll(historyMessages.flatMap { it.message })
+
                 messageList.add(Message(message, "user"))
                 messageList.add(Message("Typing...", "model"))
                 val response = chat.sendMessage(message)
@@ -83,6 +86,9 @@ class TarotViewModel @Inject constructor(
                 messageList.removeLast()
                 messageList.add(Message("Error : "+e.message.toString(), "model"))
             }
+            tarotRepositoryImpl.delete(historyMessages)
+            tarotRepositoryImpl.insert(History(nameCard = selectedCards, message = messageList))
         }
     }
+
 }

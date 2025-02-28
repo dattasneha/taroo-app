@@ -1,15 +1,21 @@
 package com.snehadatta.taroo.di
 
+import android.app.Application
+import androidx.room.Room
+import com.snehadatta.taroo.TarooApp
 import com.snehadatta.taroo.network.TarotApi
 import com.snehadatta.taroo.network.TarotApi.Companion.BASE_URL
 import com.snehadatta.taroo.data.TarotRepository
 import com.snehadatta.taroo.data.TarotRepositoryImpl
+import com.snehadatta.taroo.data.local.TarotDao
+import com.snehadatta.taroo.data.local.TarotDatabase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
+import retrofit2.Converter
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
@@ -51,4 +57,17 @@ object ApiModule {
 
     @Provides
     fun providesTarotRepository(impl: TarotRepositoryImpl): TarotRepository = impl
+
+    @Provides
+    fun providesTarotDataBase(app: Application): TarotDatabase {
+        return Room.databaseBuilder(
+            app, TarotDatabase::class.java, "tarot_db"
+        ).build()
+    }
+
+    @Provides
+    fun providesTarotDao(db: TarotDatabase): TarotDao {
+        return db.tarotDao()
+    }
+
 }

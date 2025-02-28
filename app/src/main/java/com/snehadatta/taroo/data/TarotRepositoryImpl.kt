@@ -1,5 +1,7 @@
 package com.snehadatta.taroo.data
 
+import com.snehadatta.taroo.data.local.TarotDao
+import com.snehadatta.taroo.data.local.entity.History
 import com.snehadatta.taroo.data.model.GetAllCardsResponse
 import com.snehadatta.taroo.network.TarotApi
 import com.snehadatta.taroo.util.Resource
@@ -11,7 +13,8 @@ import java.io.IOException
 import javax.inject.Inject
 
 class TarotRepositoryImpl @Inject constructor(
-    private val tarotApi: TarotApi
+    private val tarotApi: TarotApi,
+    private val tarotDao: TarotDao
 ) : TarotRepository {
     override fun getAllCards(): Flow<Resource<GetAllCardsResponse>> = flow {
         emit(Resource.Loading())
@@ -38,5 +41,17 @@ class TarotRepositoryImpl @Inject constructor(
 
         }
 
+    }
+
+    override suspend fun insert(history: History) {
+        tarotDao.insert(history)
+    }
+
+    override suspend fun delete(histories: List<History>) {
+        tarotDao.delete(histories)
+    }
+
+    override suspend fun getHistory(): List<History> {
+        return tarotDao.getHistory()
     }
 }
