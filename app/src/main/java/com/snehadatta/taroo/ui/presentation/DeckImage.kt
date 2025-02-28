@@ -27,7 +27,7 @@ fun DeckImage(
         contentScale = ContentScale.FillBounds,
         modifier = Modifier
             .aspectRatio(0.6f)
-            .padding(12.dp)
+            .padding(6.dp)
             .shadow(elevation = 8.dp, shape = RoundedCornerShape(8.dp))
             .clip(RoundedCornerShape(8.dp))
             .clickable { onClick() }

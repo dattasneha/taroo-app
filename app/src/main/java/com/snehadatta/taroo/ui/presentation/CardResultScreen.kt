@@ -83,6 +83,7 @@ fun CardResultScreen(
                         text = card.name,
                         fontFamily = MaterialTheme.typography.titleMedium.fontFamily,
                         fontWeight = FontWeight.Medium,
+                        style = MaterialTheme.typography.titleMedium,
                         textAlign = TextAlign.Center,
                         modifier = Modifier
                             .padding(bottom = 12.dp)

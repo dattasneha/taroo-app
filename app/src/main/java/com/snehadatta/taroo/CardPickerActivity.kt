@@ -7,22 +7,34 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
+import com.snehadatta.taroo.data.model.Card
 import com.snehadatta.taroo.ui.presentation.CardPickerScreen
+import com.snehadatta.taroo.ui.presentation.CardResultScreen
 import com.snehadatta.taroo.ui.presentation.ChatScreen
 import com.snehadatta.taroo.ui.presentation.ChooseDeckScreen
 import com.snehadatta.taroo.ui.presentation.Routes
@@ -37,6 +49,7 @@ import dagger.hilt.android.AndroidEntryPoint
 class CardPickerActivity : ComponentActivity() {
     private val tarotViewModel: TarotViewModel by viewModels()
 
+    @OptIn(ExperimentalMaterial3Api::class)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         tarotViewModel.getAllCards()
@@ -51,10 +64,28 @@ class CardPickerActivity : ComponentActivity() {
                 val navController = rememberNavController()
                 val cardState by tarotViewModel.cardState.collectAsStateWithLifecycle()
 
-                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
+                val title = remember { mutableStateOf("Taroo") }
+
+                Scaffold(
+                    modifier = Modifier.fillMaxSize(),
+                    topBar = {
+                        TopAppBar(
+                            colors = TopAppBarDefaults.topAppBarColors(
+                                containerColor = MaterialTheme.colorScheme.primary,
+                                titleContentColor = MaterialTheme.colorScheme.onPrimary,
+                            ),
+                            title = {
+                                Text(
+                                    text = title.value,
+                                )
+                            },
+                        )
+                    }
+                ) { innerPadding ->
 
                     NavHost(navController = navController, startDestination = Routes.ScreenDeckPicker, builder = {
                         composable(Routes.ScreenDeckPicker) {
+                            title.value = "Taroo"
                             ChooseDeckScreen(
                                 Modifier
                                     .background(color = LightOrange)
@@ -74,8 +105,11 @@ class CardPickerActivity : ComponentActivity() {
                                 is Resource.Success -> {
                                     cardState.data?.let {
                                         if (deckImageRes != null) {
+                                            title.value = "Choose 3 cards"
                                             CardPickerScreen(Modifier.padding(innerPadding), deckImageRes,
-                                                it.cards, resources, navController,tarotViewModel)
+                                                it.cards, resources, navController,tarotViewModel) { cardName ->
+                                                tarotViewModel.updateCardList(cardName)
+                                            }
                                         }
                                     }
                                 }
@@ -85,7 +119,12 @@ class CardPickerActivity : ComponentActivity() {
                                 }
                             }
                         }
+                        composable(Routes.ScreenCardResult) {
+                            title.value = "Your reading"
+                            CardResultScreen(Modifier.padding(innerPadding),tarotViewModel.selectedCards,resources)
+                        }
                         composable(Routes.ScreenChat) {
+                            title.value = "Chat with AI"
                             ChatScreen(Modifier.padding(innerPadding),tarotViewModel)
                         }
                     })

@@ -27,6 +27,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.snehadatta.taroo.data.model.Message
+import com.snehadatta.taroo.ui.theme.Brown
+import com.snehadatta.taroo.ui.theme.MediumBrown
 import com.snehadatta.taroo.ui.theme.orange
 
 @Composable
@@ -76,12 +78,12 @@ fun MessageRow(message: Message) {
                         bottom = 8.dp
                     )
                     .clip(RoundedCornerShape(48f))
-                    .background(orange)
+                    .background(color = if(isModel) Brown else MediumBrown)
                     .padding(16.dp)
             ) {
                 Text(
                     text = message.message,
-                    color = Color.Black,
+                    color = Color.White,
                     fontWeight = FontWeight.Medium
                 )
 

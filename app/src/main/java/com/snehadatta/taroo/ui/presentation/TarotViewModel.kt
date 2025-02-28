@@ -2,6 +2,7 @@ package com.snehadatta.taroo.ui.presentation
 
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.google.ai.client.generativeai.BuildConfig
@@ -9,6 +10,7 @@ import com.google.ai.client.generativeai.GenerativeModel
 import com.google.ai.client.generativeai.type.content
 import com.google.ai.client.generativeai.type.generationConfig
 import com.snehadatta.taroo.data.TarotRepositoryImpl
+import com.snehadatta.taroo.data.model.Card
 import com.snehadatta.taroo.data.model.GetAllCardsResponse
 import com.snehadatta.taroo.data.model.Message
 import com.snehadatta.taroo.util.Resource
@@ -42,6 +44,13 @@ class TarotViewModel @Inject constructor(
 
     val messageList by lazy {
         mutableStateListOf<Message>()
+    }
+
+    private var _selectedCards = mutableListOf<Card>()
+    val selectedCards: List<Card> = _selectedCards
+
+    fun updateSelectedCardList(data: Card) {
+        _selectedCards.add(data)
     }
 
     fun getAllCards() {

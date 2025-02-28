@@ -9,25 +9,22 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyRow
-import androidx.compose.foundation.lazy.grid.GridCells
-import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
-import androidx.compose.foundation.lazy.grid.itemsIndexed
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Clear
-import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
-import androidx.compose.material3.OutlinedButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -35,7 +32,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
@@ -45,7 +41,6 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.snehadatta.taroo.R
 import com.snehadatta.taroo.ui.theme.Brown
@@ -79,10 +74,10 @@ fun ChooseDeckScreen(
                 .fillMaxWidth()
                 .padding(top = 32.dp)
                 .background( brush = Brush.linearGradient(colors = listOf(
-                Brown, // Start color
-                MediumBrown,
+                    Brown, // Start color
+                    MediumBrown,
                     MediumOrange// End color
-            )), RoundedCornerShape(8.dp))
+                )), RoundedCornerShape(8.dp))
                 .aspectRatio(2.5f)
                 .clickable {  },
             horizontalArrangement = Arrangement.SpaceBetween
@@ -104,12 +99,14 @@ fun ChooseDeckScreen(
                     text = "Your AI reader",
                     color = Color.White,
                     modifier = Modifier,
-                    fontWeight = FontWeight.SemiBold
+                    fontFamily = MaterialTheme.typography.titleMedium.fontFamily,
+                    fontWeight = FontWeight.Medium
                 )
                 Text(
                     text = "CLick here to chat with your personalised mentor.",
                     color = Color.White,
-                    fontWeight = FontWeight.Thin
+                    fontFamily = MaterialTheme.typography.bodySmall.fontFamily,
+                    fontWeight = FontWeight.Medium
                 )
             }
 
@@ -128,16 +125,7 @@ fun ChooseDeckScreen(
                 .aspectRatio(2f)
         ) {
             LazyRow(
-                horizontalArrangement = Arrangement.spacedBy(0.dp),
-                modifier = Modifier
-                    .clip(RoundedCornerShape(8.dp))
-                    .border(width = 3.dp, color = Brown, RoundedCornerShape(8.dp))
-                    .background(brush = Brush.verticalGradient(colors = listOf(
-                        MediumOrange, // Start color
-                        LightOrange  // End color
-                    )))
-
-            ) {
+                horizontalArrangement = Arrangement.spacedBy(0.dp)) {
                 itemsIndexed(images) { index, imageRes ->
                     DeckImage(
                         imageRes = imageRes,
@@ -168,12 +156,10 @@ fun ChooseDeckScreen(
             },
         )
 
-        OutlinedButton (
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(64.dp)
-                .padding(top = 20.dp)
-                .align(Alignment.CenterHorizontally),
+        Spacer(modifier = Modifier.height(20.dp))
+
+        TarooButton(
+            text = "Shuffle",
             onClick = {
                 if (selectedIndex != -1 && question.isNotEmpty()) {
                     viewModel.updateInitialQuestion(question)
@@ -185,15 +171,8 @@ fun ChooseDeckScreen(
                 else if(question.isEmpty()) {
                     Toast.makeText(context, "Please write a message.", Toast.LENGTH_SHORT ).show()
                 }
-            },
-            colors = ButtonDefaults.buttonColors(Brown)
-        ) {
-            Text(
-                text = "Shuffle",
-                fontSize = 20.sp,
-                fontWeight = FontWeight.SemiBold
-            )
-        }
+            }
+        )
     }
 }
 
