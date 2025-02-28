@@ -27,7 +27,7 @@ class TarotViewModel @Inject constructor(
     val  cardState:StateFlow<Resource<GetAllCardsResponse>> = _cardState.asStateFlow()
 
     private var _initialQuestion = mutableStateOf("")
-    val initialQuestion: String = _initialQuestion.value
+    val initialQuestion = _initialQuestion
 
     fun updateInitialQuestion(newData: String) {
         _initialQuestion.value = newData

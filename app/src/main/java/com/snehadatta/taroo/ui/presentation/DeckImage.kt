@@ -11,10 +11,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
-import com.snehadatta.taroo.ui.theme.orange
 
 @Composable
 fun DeckImage(
@@ -33,9 +31,13 @@ fun DeckImage(
             .clickable { onClick() }
             .border(
                 width = if (isSelected && showBorder) 6.dp else 0.dp,
-                color = if (isSelected && showBorder) orange else Color.Transparent,
-                shape = RoundedCornerShape(12.dp)
+                color = if (isSelected && showBorder) Color.White else Color.Transparent,
+                shape = RoundedCornerShape(8.dp)
             ),
-        contentScale = ContentScale.Crop
+        alpha = if (isSelected) {
+            0.8f
+        } else {
+            1f
+        }
     )
 }

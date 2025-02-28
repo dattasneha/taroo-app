@@ -2,6 +2,7 @@ package com.snehadatta.taroo.ui.presentation
 
 import android.content.res.Resources
 import android.net.Uri
+import android.util.Log
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.grid.GridCells
@@ -59,6 +60,7 @@ fun CardPickerScreen(
                     if(selectedIndex == index && maxCard < 3) {
                         val randomIndex = Random.nextInt(mutableCardList.size)
                         viewModel.updateCardList(mutableCardList[randomIndex].name)
+//                        Log.e("debug2", viewModel.cardList[0])
                         val image = mutableCardList.removeAt(randomIndex)
                         val selectedImage = TarotImageMapper.getTarotImage(resources,image.nameShort)
                         DeckImage(

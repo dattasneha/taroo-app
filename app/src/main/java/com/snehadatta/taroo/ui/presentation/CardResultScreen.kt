@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -17,16 +18,15 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.snehadatta.taroo.R
 import com.snehadatta.taroo.data.model.Card
 import com.snehadatta.taroo.ui.theme.TarooTheme
 import com.snehadatta.taroo.util.TarotImageMapper
 
-val list = listOf(R.drawable.cover3,R.drawable.cover2,R.drawable.cover4)
 @Composable
 fun CardResultScreen(
     modifier:Modifier,
-    images: List<Card>) {
+    images: List<Card>
+) {
     val imageRes by  remember { mutableStateOf(images) }
     val selectedIndex by remember { mutableStateOf(-1) }
 
@@ -63,5 +63,35 @@ fun CardResultScreen(
                 .align(Alignment.Start)
         )
 
+    }
+}
+
+@Preview
+@Composable
+private fun CardResultScreenPreview() {
+    val dummyCard = Card(
+        type = "minor",
+        nameShort = "cu09",
+        name = "Nine of Cups",
+        value = "nine",
+        valueInt = 9,
+        meaningUp = "Concord, contentment, physical bien-être; also victory, success, advantage; " +
+                "satisfaction for the Querent or person for whom the consultation is made.",
+        meaningRev = "Truth, loyalty, liberty; but the readings vary and include mistakes, " +
+                "imperfections, etc.",
+        desc = "A goodly personage has feasted to his heart's content, and abundant refreshment " +
+                "of wine is on the arched counter behind him, seeming to indicate that the future " +
+                "is also assured. The picture offers the material side only, but there are other" +
+                " aspects.",
+        suit = "cups"
+    )
+
+    TarooTheme {
+        Scaffold { innerPadding ->
+            CardResultScreen(
+                modifier = Modifier.padding(innerPadding),
+                images = listOf(dummyCard, dummyCard, dummyCard)
+            )
+        }
     }
 }
