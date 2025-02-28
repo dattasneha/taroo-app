@@ -17,5 +17,5 @@ interface TarotDao {
     suspend fun delete(histories: List<History>)
 
     @Query("SELECT * FROM history ORDER BY id ASC")
-    fun getHistory(): List<History>
+    suspend fun getHistory(): List<History>
 }
