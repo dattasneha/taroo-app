@@ -139,6 +139,7 @@ fun CardWithHeaderAndBody(
                 modifier = Modifier
                     .align(Alignment.Start)
             )
+            Spacer(Modifier.height(8.dp))
         }
     }
 }

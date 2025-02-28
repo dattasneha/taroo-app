@@ -8,6 +8,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.aspectRatio
@@ -73,13 +74,17 @@ fun ChooseDeckScreen(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(top = 32.dp)
-                .background( brush = Brush.linearGradient(colors = listOf(
-                    Brown, // Start color
-                    MediumBrown,
-                    MediumOrange// End color
-                )), RoundedCornerShape(8.dp))
+                .background(
+                    brush = Brush.linearGradient(
+                        colors = listOf(
+                            Brown, // Start color
+                            MediumBrown,
+                            MediumOrange// End color
+                        )
+                    ), RoundedCornerShape(8.dp)
+                )
                 .aspectRatio(2.5f)
-                .clickable {  },
+                .clickable { navController.navigate(Routes.ScreenChat) },
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
             Image(
@@ -103,7 +108,7 @@ fun ChooseDeckScreen(
                     fontWeight = FontWeight.Medium
                 )
                 Text(
-                    text = "CLick here to chat with your personalised mentor.",
+                    text = "Click here to chat with your personalised mentor.",
                     color = Color.White,
                     fontFamily = MaterialTheme.typography.bodySmall.fontFamily,
                     fontWeight = FontWeight.Medium
@@ -125,7 +130,9 @@ fun ChooseDeckScreen(
                 .aspectRatio(2f)
         ) {
             LazyRow(
-                horizontalArrangement = Arrangement.spacedBy(0.dp)) {
+                horizontalArrangement = Arrangement.spacedBy(0.dp),
+                contentPadding = PaddingValues(8.dp)
+            ) {
                 itemsIndexed(images) { index, imageRes ->
                     DeckImage(
                         imageRes = imageRes,
