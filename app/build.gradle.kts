@@ -99,4 +99,5 @@ dependencies {
     implementation(libs.androidx.ui.text.google.fonts)
     implementation(libs.androidx.navigation.compose)
     implementation(libs.generativeai)
+    implementation("com.github.jeziellago:compose-markdown:0.3.4")
 }

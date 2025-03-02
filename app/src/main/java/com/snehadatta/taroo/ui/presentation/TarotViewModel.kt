@@ -65,6 +65,10 @@ class TarotViewModel @Inject constructor(
         messageList.add(data)
     }
 
+    fun clearMessageList() {
+        messageList.clear()
+    }
+
     fun updateSelectedCardList(data: Card) {
         _selectedCards.add(data)
     }
@@ -112,6 +116,7 @@ class TarotViewModel @Inject constructor(
                 messageList.add(Message(message = "Typing...", role = Role.MODEL.role))
 
                 val response = chat.sendMessage(message)
+
                 messageList.removeLast()
 
                 modelMessageId = tarotRepositoryImpl.insertMessage(Message(message = response.text.toString(), role = Role.MODEL.role))
@@ -124,10 +129,15 @@ class TarotViewModel @Inject constructor(
             }
             _messageIdList.add(modelMessageId)
             if(historyId == null) {
-              historyId = tarotRepositoryImpl.insertNewChatHistory(History(cardIdList = cardNameList, messageIdList = messageIdList))
+                historyId = tarotRepositoryImpl.insertNewChatHistory(History(cardIdList = cardNameList, messageIdList = messageIdList))
+            } else {
+                tarotRepositoryImpl.updateMessageIdList(
+                    messageIdList = messageIdList,
+                    historyId = historyId!!
+                )
             }
-            tarotRepositoryImpl.updateMessageIdList(messageIdList = messageIdList, historyId = historyId!!)
         }
     }
 
 }
+

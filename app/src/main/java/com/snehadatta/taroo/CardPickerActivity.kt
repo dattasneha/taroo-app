@@ -27,6 +27,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
+import com.snehadatta.taroo.data.local.entity.Message
 import com.snehadatta.taroo.ui.presentation.CardPickerScreen
 import com.snehadatta.taroo.ui.presentation.CardResultScreen
 import com.snehadatta.taroo.ui.presentation.ChatScreenCardReading
@@ -54,7 +55,9 @@ class CardPickerActivity : ComponentActivity() {
 
                 val mediaPlayer = MediaPlayer.create(this,R.raw.background_music)
                 mediaPlayer.start()
-//
+
+                tarotViewModel.getChatHistory()
+
                 val navController = rememberNavController()
                 val cardState by tarotViewModel.cardState.collectAsStateWithLifecycle()
 

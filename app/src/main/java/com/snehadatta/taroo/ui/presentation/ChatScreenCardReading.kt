@@ -14,6 +14,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.Send
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -26,14 +27,19 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.google.ai.client.generativeai.type.content
+import com.snehadatta.taroo.R
 import com.snehadatta.taroo.data.local.entity.Message
 import com.snehadatta.taroo.ui.theme.Brown
+import com.snehadatta.taroo.ui.theme.LightBrown
 import com.snehadatta.taroo.ui.theme.MediumBrown
+import com.snehadatta.taroo.ui.theme.bodyFontFamily
 import com.snehadatta.taroo.util.Resource
+import dev.jeziellago.compose.markdowntext.MarkdownText
 import javax.annotation.meta.When
 
 @Composable
@@ -44,7 +50,6 @@ fun ChatScreenCardReading(
     Column(
         modifier = modifier
     ) {
-        viewModel.getChatHistory()
         val chatHistoryState by viewModel.chatHistoryList.collectAsStateWithLifecycle()
 
         when(chatHistoryState) {
@@ -52,16 +57,18 @@ fun ChatScreenCardReading(
                 CircularProgressIndicator()
             }
             is Resource.Success -> {
-                chatHistoryState.data?.map { it.messageList.forEach { it ->
+                viewModel.clearMessageList()
+                chatHistoryState.data?.forEach { it.messageList.forEach { it ->
                     viewModel.updateMessageList(Message(message = it.message, role = it.role))
                 }}
             }
             is Resource.Error -> {
                 val errorMessage = chatHistoryState.message ?: "An unknown error occurred"
-                Text(text = "Error: $errorMessage", color = Color.Red)
+//                Text(text = "Error: $errorMessage", color = Color.Red)
             }
         }
 
+        LaunchedEffect(Unit) {
             if(viewModel.cardNameList.isNotEmpty()) {
                 viewModel.getAiResponseCardReading(
                     viewModel.initialQuestion.value+
@@ -69,6 +76,7 @@ fun ChatScreenCardReading(
                             viewModel.selectedCards.map { it.name }
                 )
             }
+        }
 
         MessageList(modifier = Modifier.weight(1f),viewModel.messageList)
 
@@ -111,15 +119,17 @@ fun MessageRow(message: Message) {
                         bottom = 8.dp
                     )
                     .clip(RoundedCornerShape(48f))
-                    .background(color = if(isModel) Brown else MediumBrown)
+                    .background(color = if(isModel) LightBrown else MediumBrown)
                     .padding(16.dp)
             ) {
-                Text(
-                    text = message.message,
+                MarkdownText(
+                    markdown = message.message,
                     color = Color.White,
-                    fontWeight = FontWeight.Medium
+                    style = TextStyle(
+                        fontWeight = FontWeight.Medium,
+                        fontFamily = bodyFontFamily
+                    )
                 )
-
             }
         }
     }
@@ -148,7 +158,9 @@ fun MessageInput(onMessageSend: (String) -> Unit) {
         }) {
             Icon(
                 imageVector = Icons.AutoMirrored.Filled.Send,
-                contentDescription = "Send")
+                contentDescription = "Send",
+                tint = MaterialTheme.colorScheme.primary
+            )
         }
     }
 }
