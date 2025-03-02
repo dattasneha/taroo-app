@@ -3,8 +3,6 @@ package com.snehadatta.taroo.data.local
 import androidx.room.ProvidedTypeConverter
 import androidx.room.TypeConverter
 import com.google.gson.reflect.TypeToken
-import com.snehadatta.taroo.data.model.Card
-import com.snehadatta.taroo.data.model.Message
 import com.snehadatta.taroo.util.GsonParser
 
 @ProvidedTypeConverter
@@ -12,34 +10,35 @@ class Converters(
     private val jsonParser: GsonParser
 ) {
     @TypeConverter
-    fun fromCardJson(json: String):List<Card> {
-        return jsonParser.fromJson<ArrayList<Card>>(
+    fun fromCardIdListJson(json: String): List<String> {
+        return jsonParser.fromJson<ArrayList<String>>(
             json,
-            object : TypeToken<ArrayList<Card>>(){}.type
+            object : TypeToken<ArrayList<String>>(){}.type
         )?: emptyList()
     }
 
     @TypeConverter
-    fun toCardJson(cards:List<Card>):String {
+    fun toCardIdListJson(cards: List<String>): String {
         return jsonParser.toJson(
             cards,
-            object : TypeToken<ArrayList<Card>>(){}.type
+            object : TypeToken<ArrayList<String>>(){}.type
         )?: "[]"
     }
 
+
     @TypeConverter
-    fun fromMessageJson(json: String):List<Message> {
-        return jsonParser.fromJson<ArrayList<Message>>(
+    fun fromMessageIdListJson(json: String): List<Long> {
+        return jsonParser.fromJson<ArrayList<Long>>(
             json,
-            object : TypeToken<ArrayList<Message>>(){}.type
+            object : TypeToken<ArrayList<Long>>(){}.type
         )?: emptyList()
     }
 
     @TypeConverter
-    fun toMessageJson(messages:List<Message>):String {
+    fun toMessageIdListJson(cards: List<Long>): String {
         return jsonParser.toJson(
-            messages,
-            object : TypeToken<ArrayList<Message>>(){}.type
+            cards,
+            object : TypeToken<ArrayList<Long>>(){}.type
         )?: "[]"
     }
 }

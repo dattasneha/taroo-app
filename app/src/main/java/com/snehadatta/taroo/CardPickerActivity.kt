@@ -7,14 +7,10 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -25,17 +21,15 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
-import com.snehadatta.taroo.data.model.Card
 import com.snehadatta.taroo.ui.presentation.CardPickerScreen
 import com.snehadatta.taroo.ui.presentation.CardResultScreen
-import com.snehadatta.taroo.ui.presentation.ChatScreen
+import com.snehadatta.taroo.ui.presentation.ChatScreenCardReading
 import com.snehadatta.taroo.ui.presentation.ChooseDeckScreen
 import com.snehadatta.taroo.ui.presentation.Routes
 import com.snehadatta.taroo.ui.presentation.TarotViewModel
@@ -123,9 +117,9 @@ class CardPickerActivity : ComponentActivity() {
                             title.value = "Your reading"
                             CardResultScreen(Modifier.padding(innerPadding),tarotViewModel.selectedCards,resources)
                         }
-                        composable(Routes.ScreenChat) {
+                        composable(Routes.ScreenChatCardReading) {
                             title.value = "Chat with AI"
-                            ChatScreen(Modifier.padding(innerPadding),tarotViewModel)
+                            ChatScreenCardReading(Modifier.padding(innerPadding),tarotViewModel)
                         }
                     })
                 }

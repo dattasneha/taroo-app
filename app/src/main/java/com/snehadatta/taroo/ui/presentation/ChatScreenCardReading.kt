@@ -12,10 +12,12 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.IconButton
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.Send
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -26,22 +28,53 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import com.snehadatta.taroo.data.model.Message
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.google.ai.client.generativeai.type.content
+import com.snehadatta.taroo.data.local.entity.Message
 import com.snehadatta.taroo.ui.theme.Brown
 import com.snehadatta.taroo.ui.theme.MediumBrown
-import com.snehadatta.taroo.ui.theme.orange
+import com.snehadatta.taroo.util.Resource
+import javax.annotation.meta.When
 
 @Composable
-fun ChatScreen(
+fun ChatScreenCardReading(
     modifier: Modifier,
     viewModel: TarotViewModel) {
+
     Column(
         modifier = modifier
     ) {
+        viewModel.getChatHistory()
+        val chatHistoryState by viewModel.chatHistoryList.collectAsStateWithLifecycle()
+
+        when(chatHistoryState) {
+            is Resource.Loading -> {
+                CircularProgressIndicator()
+            }
+            is Resource.Success -> {
+                chatHistoryState.data?.map { it.messageList.forEach { it ->
+                    viewModel.updateMessageList(Message(message = it.message, role = it.role))
+                }}
+            }
+            is Resource.Error -> {
+                val errorMessage = chatHistoryState.message ?: "An unknown error occurred"
+                Text(text = "Error: $errorMessage", color = Color.Red)
+            }
+        }
+
+            if(viewModel.cardNameList.isNotEmpty()) {
+                viewModel.getAiResponseCardReading(
+                    viewModel.initialQuestion.value+
+                            ". Received cards are"+
+                            viewModel.selectedCards.map { it.name }
+                )
+            }
+
         MessageList(modifier = Modifier.weight(1f),viewModel.messageList)
+
         MessageInput(
             onMessageSend = {
-                viewModel.getAiResponse(it)
+                viewModel.getAiResponseCardReading(it)
             }
         )
     }
@@ -61,7 +94,7 @@ fun MessageList(modifier: Modifier,messageList: List<Message>) {
 
 @Composable
 fun MessageRow(message: Message) {
-    var isModel = message.role == "model"
+    var isModel = message.role == Role.MODEL.role
     Row(
         verticalAlignment = Alignment.CenterVertically
     ) {
@@ -110,10 +143,8 @@ fun MessageInput(onMessageSend: (String) -> Unit) {
             }
         )
         IconButton(onClick = {
-            if (message.isNotEmpty()) {
-                onMessageSend(message)
-                message = ""
-            }
+            onMessageSend(message)
+            message = ""
         }) {
             Icon(
                 imageVector = Icons.AutoMirrored.Filled.Send,

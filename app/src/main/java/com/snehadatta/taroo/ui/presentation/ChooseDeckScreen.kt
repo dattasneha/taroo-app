@@ -84,7 +84,7 @@ fun ChooseDeckScreen(
                     ), RoundedCornerShape(8.dp)
                 )
                 .aspectRatio(2.5f)
-                .clickable { navController.navigate(Routes.ScreenChat) },
+                .clickable { navController.navigate(Routes.ScreenChatCardReading) },
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
             Image(

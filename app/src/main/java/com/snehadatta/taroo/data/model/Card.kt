@@ -1,8 +1,11 @@
 package com.snehadatta.taroo.data.model
 
 
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 import com.google.gson.annotations.SerializedName
 
+@Entity(tableName = "card")
 data class Card(
     @SerializedName("desc")
     val desc: String,
@@ -12,6 +15,7 @@ data class Card(
     val meaningUp: String,
     @SerializedName("name")
     val name: String,
+    @PrimaryKey
     @SerializedName("name_short")
     val nameShort: String,
     @SerializedName("suit")

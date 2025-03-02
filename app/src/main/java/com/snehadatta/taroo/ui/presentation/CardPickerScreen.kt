@@ -4,7 +4,6 @@ import android.content.res.Resources
 import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -17,36 +16,21 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.itemsIndexed
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.ArrowBack
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBar
-import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
-import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
-import androidx.navigation.compose.rememberNavController
-import com.snehadatta.taroo.R
-import com.snehadatta.taroo.data.local.entity.History
 import com.snehadatta.taroo.data.model.Card
-import com.snehadatta.taroo.data.model.Message
-import com.snehadatta.taroo.ui.theme.TarooTheme
 import com.snehadatta.taroo.util.TarotImageMapper
 import kotlin.random.Random
 
@@ -85,7 +69,7 @@ fun CardPickerScreen(
                     val randomIndex = Random.nextInt(mutableCardList.size)
                     val selectedCard = mutableCardList.removeAt(randomIndex)
 
-                    onCardClick(selectedCard.name)
+                    onCardClick(selectedCard.nameShort)
                     viewModel.updateSelectedCardList(selectedCard)
                     currentCardImageRes.intValue = TarotImageMapper.getTarotImage(resources, selectedCard.nameShort)
 
@@ -143,7 +127,7 @@ fun CardPickerScreen(
 
                     TarooButton(
                         text = "Chat with AI",
-                        onClick = { navController.navigate(Routes.ScreenChat) }
+                        onClick = { navController.navigate(Routes.ScreenChatCardReading) }
                     )
                 }
             }
