@@ -2,6 +2,13 @@
 
 The **Tarot Reading App** is an interactive AI-powered fortune-telling experience built with **Kotlin** and **Jetpack Compose**. It allows users to ask a question, pick tarot cards, and receive insightful interpretations.
 
+## Screenshots
+<img src="https://github.com/user-attachments/assets/30a435ff-7f1f-4ce3-b651-4d0f9c64420e" width=300/>
+<img src="https://github.com/user-attachments/assets/373a8cab-18fd-4849-aecc-b8e86ceb4307" width=300/>
+<img src="https://github.com/user-attachments/assets/8c76a5c8-5291-44d3-ab94-ac59bffbe692" width=300/>
+<img src="https://github.com/user-attachments/assets/fa4a631f-5d9f-48d5-b35d-7b5265b876f6" width=300/>
+<img src="https://github.com/user-attachments/assets/a541b0f1-6e7c-4416-95a9-da7035046d57" width=300/>
+
 ## Features & Development Levels
 
 ### Core Tarot Reading Functionality
@@ -59,7 +66,6 @@ The **Tarot Reading App** is an interactive AI-powered fortune-telling experienc
      OPENAI_API_KEY="your_api_key_here"
      ```
 4. **Run the app on an emulator or device!**
-
 
 ## Download app
 
