@@ -23,6 +23,7 @@ The **Tarot Reading App** is an interactive AI-powered fortune-telling experienc
 - **LazyVerticalGrid** for deck display
 - **Room DB** for storing past readings
 - **Retrofit** for fetching network requests
+- **Dagger-Hilt** for dependency injection
 - [Tarot Api](https://tarotapi.dev/) for predefined results
 - **ViewModel** for state management
 ---
