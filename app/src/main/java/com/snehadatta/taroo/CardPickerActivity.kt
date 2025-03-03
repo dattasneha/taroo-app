@@ -117,11 +117,11 @@ class CardPickerActivity : ComponentActivity() {
                         }
                         composable(Routes.ScreenCardResult) {
                             title.value = "Your reading"
-                            CardResultScreen(Modifier.padding(innerPadding),tarotViewModel.selectedCards,resources)
+                            CardResultScreen(Modifier.padding(innerPadding),tarotViewModel.selectedCards,resources,tarotViewModel,navController)
                         }
                         composable(Routes.ScreenChatCardReading) {
                             title.value = "Chat with AI"
-                            ChatScreenCardReading(Modifier.padding(innerPadding),tarotViewModel)
+                            ChatScreenCardReading(Modifier.padding(innerPadding),tarotViewModel,navController)
                         }
                     })
                 }

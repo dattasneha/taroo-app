@@ -2,6 +2,8 @@ package com.snehadatta.taroo.ui.presentation
 
 import android.content.res.Resources
 import android.os.Build
+import androidx.activity.compose.BackHandler
+import androidx.activity.compose.LocalOnBackPressedDispatcherOwner
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -24,6 +26,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -33,7 +36,9 @@ import androidx.compose.ui.window.Dialog
 import androidx.navigation.NavController
 import com.snehadatta.taroo.data.model.Card
 import com.snehadatta.taroo.util.TarotImageMapper
+import kotlinx.coroutines.android.awaitFrame
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import kotlin.random.Random
 
 @RequiresApi(Build.VERSION_CODES.TIRAMISU)
@@ -47,6 +52,14 @@ fun CardPickerScreen(
     viewModel: TarotViewModel,
     onCardClick: (String) -> Unit
 ) {
+    BackHandler (
+        enabled = true
+    ){
+        viewModel.clearSelectedCard()
+        navController.navigate(Routes.ScreenDeckPicker) {
+            popUpTo(Routes.ScreenDeckPicker) { inclusive = true } // Avoid multiple entries in back stack
+        }
+    }
     val images = List(78) { deckImageRes }
     val mutableCardList = remember { tarotCardList.toMutableList() }
     var showDialog by remember { mutableStateOf(false) }

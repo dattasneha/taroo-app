@@ -75,7 +75,9 @@ class TarotViewModel @Inject constructor(
     fun updateSelectedCardList(data: Card) {
         _selectedCards.add(data)
     }
-
+    fun clearSelectedCard() {
+        _selectedCards.clear()
+    }
     fun getAllCards() {
         viewModelScope.launch {
             tarotRepositoryImpl.getAllCards().collect { result ->

@@ -1,5 +1,6 @@
 package com.snehadatta.taroo.ui.presentation
 
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -30,6 +31,7 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.navigation.NavController
 import com.snehadatta.taroo.data.local.entity.Message
 import com.snehadatta.taroo.ui.theme.LightBrown
 import com.snehadatta.taroo.ui.theme.MediumBrown
@@ -40,11 +42,20 @@ import dev.jeziellago.compose.markdowntext.MarkdownText
 @Composable
 fun ChatScreenCardReading(
     modifier: Modifier,
-    viewModel: TarotViewModel) {
+    viewModel: TarotViewModel,
+    navController:NavController) {
 
     Column(
         modifier = modifier
     ) {
+        BackHandler (
+            enabled = true
+        ){
+            viewModel.clearSelectedCard()
+            navController.navigate(Routes.ScreenDeckPicker) {
+                popUpTo(Routes.ScreenDeckPicker) { inclusive = true } // Avoid multiple entries in back stack
+            }
+        }
         val chatHistoryState by viewModel.chatHistoryList.collectAsStateWithLifecycle()
 
         when(chatHistoryState) {
