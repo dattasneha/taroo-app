@@ -131,14 +131,19 @@ fun CardPickerScreen(
 
                     TarooButton(
                         text = "Show Readings",
-                        onClick = { navController.navigate(Routes.ScreenCardResult) }
+                        onClick = {
+                            navController.navigate(Routes.ScreenCardResult)
+                        }
                     )
 
                     Spacer(modifier = Modifier.height(12.dp))
 
                     TarooButton(
                         text = "Chat with AI",
-                        onClick = { navController.navigate(Routes.ScreenChatCardReading) }
+                        onClick = {
+                            viewModel.changeStateOfInitialQuestion(true)
+                            navController.navigate(Routes.ScreenChatCardReading)
+                        }
                     )
                 }
             }

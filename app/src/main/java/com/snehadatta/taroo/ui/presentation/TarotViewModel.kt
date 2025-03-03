@@ -48,10 +48,14 @@ class TarotViewModel @Inject constructor(
 
     var historyId: Long? = null
 
+    var askInitialQuestion = false
+
     fun updateInitialQuestion(newData: String) {
         _initialQuestion.value = newData
     }
-
+    fun changeStateOfInitialQuestion(it: Boolean) {
+        askInitialQuestion = it
+    }
     fun updateCardList(data: String) {
         _cardNameList.add(data)
     }

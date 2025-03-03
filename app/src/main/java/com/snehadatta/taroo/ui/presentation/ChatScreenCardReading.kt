@@ -18,7 +18,6 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -27,22 +26,16 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import androidx.lifecycle.viewmodel.compose.viewModel
-import com.google.ai.client.generativeai.type.content
-import com.snehadatta.taroo.R
 import com.snehadatta.taroo.data.local.entity.Message
-import com.snehadatta.taroo.ui.theme.Brown
 import com.snehadatta.taroo.ui.theme.LightBrown
 import com.snehadatta.taroo.ui.theme.MediumBrown
 import com.snehadatta.taroo.ui.theme.bodyFontFamily
 import com.snehadatta.taroo.util.Resource
 import dev.jeziellago.compose.markdowntext.MarkdownText
-import javax.annotation.meta.When
 
 @Composable
 fun ChatScreenCardReading(
@@ -73,6 +66,12 @@ fun ChatScreenCardReading(
         MessageList(modifier = Modifier.weight(1f),viewModel.messageList)
 
         MessageInput(
+            initialQuestion = if (viewModel.askInitialQuestion && viewModel.cardNameList.isNotEmpty()) {
+                viewModel.askInitialQuestion = false
+                viewModel.initialQuestion.value +
+                        ". Received cards are" +
+                        viewModel.selectedCards.map { it.name }
+            } else "",
             onMessageSend = {
                 viewModel.getAiResponseCardReading(it)
             }
@@ -131,8 +130,8 @@ fun MessageRow(message: Message) {
 }
 
 @Composable
-fun MessageInput(onMessageSend: (String) -> Unit) {
-    var message by remember { mutableStateOf("") }
+fun MessageInput(initialQuestion: String, onMessageSend: (String) -> Unit) {
+    var message by remember { mutableStateOf(initialQuestion) }
     Row (
         modifier = Modifier.padding(8.dp),
         verticalAlignment = Alignment.CenterVertically
