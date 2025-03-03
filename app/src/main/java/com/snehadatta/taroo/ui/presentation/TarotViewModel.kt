@@ -24,7 +24,6 @@ enum class Role(val role: String) {
     USER("user"),
     MODEL("model")
 }
-
 @HiltViewModel
 class TarotViewModel @Inject constructor(
     private val tarotRepositoryImpl: TarotRepositoryImpl

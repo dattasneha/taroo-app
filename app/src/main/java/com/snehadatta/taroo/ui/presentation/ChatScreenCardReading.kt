@@ -27,10 +27,12 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.google.ai.client.generativeai.type.content
 import com.snehadatta.taroo.R
 import com.snehadatta.taroo.data.local.entity.Message
@@ -68,16 +70,6 @@ fun ChatScreenCardReading(
             }
         }
 
-        LaunchedEffect(Unit) {
-            if(viewModel.cardNameList.isNotEmpty()) {
-                viewModel.getAiResponseCardReading(
-                    viewModel.initialQuestion.value+
-                            ". Received cards are"+
-                            viewModel.selectedCards.map { it.name }
-                )
-            }
-        }
-
         MessageList(modifier = Modifier.weight(1f),viewModel.messageList)
 
         MessageInput(
@@ -110,16 +102,18 @@ fun MessageRow(message: Message) {
             modifier = Modifier.fillMaxWidth()
         ) {
             Box(
-                modifier = Modifier.align(
-                    if(isModel) Alignment.BottomStart else Alignment.BottomEnd)
+                modifier = Modifier
+                    .align(
+                        if (isModel) Alignment.BottomStart else Alignment.BottomEnd
+                    )
                     .padding(
-                        start = if(isModel) 8.dp else 60.dp,
-                        end = if(isModel) 60.dp else 8.dp,
+                        start = if (isModel) 8.dp else 60.dp,
+                        end = if (isModel) 60.dp else 8.dp,
                         top = 8.dp,
                         bottom = 8.dp
                     )
                     .clip(RoundedCornerShape(48f))
-                    .background(color = if(isModel) LightBrown else MediumBrown)
+                    .background(color = if (isModel) LightBrown else MediumBrown)
                     .padding(16.dp)
             ) {
                 MarkdownText(

@@ -27,7 +27,6 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
-import com.snehadatta.taroo.data.local.entity.Message
 import com.snehadatta.taroo.ui.presentation.CardPickerScreen
 import com.snehadatta.taroo.ui.presentation.CardResultScreen
 import com.snehadatta.taroo.ui.presentation.ChatScreenCardReading
@@ -39,11 +38,10 @@ import com.snehadatta.taroo.ui.theme.TarooTheme
 import com.snehadatta.taroo.util.Resource
 import dagger.hilt.android.AndroidEntryPoint
 
-
 @AndroidEntryPoint
 class CardPickerActivity : ComponentActivity() {
     private val tarotViewModel: TarotViewModel by viewModels()
-
+    private var mediaPlayer: MediaPlayer? = null
     @OptIn(ExperimentalMaterial3Api::class)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -53,8 +51,9 @@ class CardPickerActivity : ComponentActivity() {
         setContent {
             TarooTheme {
 
-                val mediaPlayer = MediaPlayer.create(this,R.raw.background_music)
-                mediaPlayer.start()
+                mediaPlayer?.release();
+                mediaPlayer = MediaPlayer.create(this, R.raw.background_music);
+                mediaPlayer?.start()
 
                 tarotViewModel.getChatHistory()
 
