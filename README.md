@@ -20,6 +20,7 @@ The **Tarot Reading App** is an interactive AI-powered fortune-telling experienc
 
 **Tech Stack:**
 - **Kotlin** for Android development
+- **Jetpack Compose** for UI 
 - **LazyVerticalGrid** for deck display
 - **Room DB** for storing past readings
 - **Retrofit** for fetching network requests
