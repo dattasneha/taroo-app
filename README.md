@@ -59,7 +59,7 @@ The **Tarot Reading App** is an interactive AI-powered fortune-telling experienc
    - Get an API key from Gemini api.
    - Add it to `local.properties`:
      ```properties
-     OPENAI_API_KEY="your_api_key_here"
+     API_KEY="your_api_key_here"
      ```
 4. **Run the app on an emulator or device!**
 
