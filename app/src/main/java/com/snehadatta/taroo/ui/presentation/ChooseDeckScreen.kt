@@ -138,6 +138,7 @@ fun ChooseDeckScreen(
                         imageRes = imageRes,
                         isSelected = selectedIndex == index,
                         showBorder = true,
+                        enableFlip = false,
                         onClick = { selectedIndex = if (selectedIndex == index) -1 else index }
                     )
                 }

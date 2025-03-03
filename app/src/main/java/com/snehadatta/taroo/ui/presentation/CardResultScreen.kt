@@ -76,6 +76,7 @@ fun CardResultScreen(
                         ),
                         isSelected = i == selectedTabIndex.intValue,
                         showBorder = false,
+                        enableFlip = false,
                         onClick = {  },
                     )
 

@@ -19,6 +19,7 @@ import androidx.compose.foundation.lazy.grid.itemsIndexed
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
@@ -32,6 +33,7 @@ import androidx.compose.ui.window.Dialog
 import androidx.navigation.NavController
 import com.snehadatta.taroo.data.model.Card
 import com.snehadatta.taroo.util.TarotImageMapper
+import kotlinx.coroutines.delay
 import kotlin.random.Random
 
 @RequiresApi(Build.VERSION_CODES.TIRAMISU)
@@ -48,6 +50,13 @@ fun CardPickerScreen(
     val images = List(78) { deckImageRes }
     val mutableCardList = remember { tarotCardList.toMutableList() }
     var showDialog by remember { mutableStateOf(false) }
+    var isShuffling by remember { mutableStateOf(true) }
+
+    // Shuffling animation effect
+    LaunchedEffect(Unit) {
+        delay(1500)  // Shuffle effect duration
+        isShuffling = false
+    }
 
     LazyVerticalGrid(
         columns = GridCells.Fixed(5),
@@ -63,6 +72,7 @@ fun CardPickerScreen(
                 imageRes = currentCardImageRes.intValue,
                 isSelected = viewModel.selectedCards.any { it.nameShort == tarotCardList[index].nameShort },
                 showBorder = false,
+                enableFlip = true,
                 onClick = {
                     if (viewModel.selectedCards.size >= 3 || mutableCardList.isEmpty()) return@DeckImage
 
@@ -111,6 +121,7 @@ fun CardPickerScreen(
                                 imageRes = TarotImageMapper.getTarotImage(resources, card.nameShort),
                                 isSelected = false,
                                 showBorder = false,
+                                enableFlip = false,
                                 onClick = {}
                             )
                         }
