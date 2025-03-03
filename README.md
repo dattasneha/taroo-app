@@ -47,10 +47,6 @@ The **Tarot Reading App** is an interactive AI-powered fortune-telling experienc
 - **Gemini API** for AI-generated interpretations
 - **ViewModel** for real-time UI updates
 
-## 📂 Project Structure
-```
-```
-
 ## Steps to setup project
 ### Installation & Setup
 1. **Clone the repository:**
