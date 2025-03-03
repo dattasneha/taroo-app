@@ -64,5 +64,5 @@ The **Tarot Reading App** is an interactive AI-powered fortune-telling experienc
 4. **Run the app on an emulator or device!**
 
 ## Download app
-
+[Download App](https://github.com/dattasneha/taroo-app/releases/download/v1.0/taroo-app.apk)
 
