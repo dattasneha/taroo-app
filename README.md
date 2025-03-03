@@ -16,7 +16,7 @@ The **Tarot Reading App** is an interactive AI-powered fortune-telling experienc
 - Users input a question (text-based).
 - A shuffled deck of **78 tarot cards** is displayed.
 - Users select **3 cards** by tapping.
-- card flip animation reveal the card
+- Card flip animation reveal the card
 
 **Tech Stack:**
 - **Kotlin** for Android development
@@ -37,13 +37,13 @@ The **Tarot Reading App** is an interactive AI-powered fortune-telling experienc
 - **MediaPlayer Library** for playing background music
 
 ### AI-Powered Tarot Readings & Multi-Turn Chat 🤖🔮
-✅ **AI-Enhanced Features:**
+**AI-Enhanced Features:**
 - **AI Tarot Interpretation** → Sends selected cards & user question to Gemini API.
 - **Receive & Display AI Response** → AI generates a custom fortune reading.
 - **Dynamic Text Styling** → AI responses feature formatted text result.
 - **Multi-Turn Chat** → Users can ask follow-up questions to continue the conversation.
 
-✅ Tech Stack:**
+**Tech Stack:**
 - **Gemini API** for AI-generated interpretations
 - **ViewModel** for real-time UI updates
 
@@ -59,7 +59,7 @@ The **Tarot Reading App** is an interactive AI-powered fortune-telling experienc
    - Get an API key from Gemini api.
    - Add it to `local.properties`:
      ```properties
-     API_KEY="your_api_key_here"
+     API_KEY=your_api_key_here
      ```
 4. **Run the app on an emulator or device!**
 
