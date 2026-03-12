@@ -38,8 +38,6 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.snehadatta.taroo.data.model.Card
 import com.snehadatta.taroo.ui.theme.LightBrown
-import com.snehadatta.taroo.ui.theme.LightOrange
-import com.snehadatta.taroo.ui.theme.TarooTheme
 import com.snehadatta.taroo.util.TarotImageMapper
 
 @Composable
