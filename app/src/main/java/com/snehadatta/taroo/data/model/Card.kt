@@ -21,9 +21,9 @@ data class Card(
     @SerializedName("suit")
     val suit: String?,
     @SerializedName("type")
-    val type: String,
+    val type: String?,
     @SerializedName("value")
-    val value: String,
+    val value: String?,
     @SerializedName("value_int")
     val valueInt: Int
 )
